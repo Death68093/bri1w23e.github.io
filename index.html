@@ -3,35 +3,109 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Client Downloads</title>
+  <title>Client Downloads – Matrix Style</title>
+
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      background: black;
+      color: #00ff00;
+      font-family: "Courier New", monospace;
+      overflow: hidden;
+      text-align: center;
+    }
+
+    h2 {
+      margin-top: 40px;
+      font-size: 32px;
+      text-shadow: 0 0 10px #00ff00;
+    }
+
+    a {
+      display: inline-block;
+      margin: 12px;
+      padding: 12px 25px;
+      color: #00ff00;
+      border: 1px solid #00ff00;
+      text-decoration: none;
+      border-radius: 4px;
+      font-size: 18px;
+      transition: 0.2s;
+      text-shadow: 0 0 5px #00ff00;
+    }
+
+    a:hover {
+      background: #00ff00;
+      color: black;
+      box-shadow: 0 0 15px #00ff00;
+    }
+
+    /* Matrix Rain Canvas */
+    canvas {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: -1;
+    }
+  </style>
 </head>
 <body>
 
-  <h2> 1.12 </h2>
+  <canvas id="matrix"></canvas>
 
-  <p>
-    <a href="https://bri1w23e.github.io/AutoClient.html" 
-       target="_blank" 
-       rel="noopener noreferrer">
-       New Auto Client
-    </a>
-  </p>
+  <h2>Client Versions (1.12)</h2>
 
-  <p>
-    <a href="https://bri1w23e.github.io/Old%20AutoClient.html" 
-       target="_blank" 
-       rel="noopener noreferrer">
-       Old Auto Client
-    </a>
-  </p>
+  <a href="https://bri1w23e.github.io/AutoClient.html" target="_blank" rel="noopener noreferrer">
+    New Auto Client
+  </a>
 
-  <p>
-    <a href="https://bri1w23e.github.io/Galactic-Client-2.0.0.html" 
-       target="_blank" 
-       rel="noopener noreferrer">
-       Galactic Client
-    </a>
-  </p>
+  <a href="https://bri1w23e.github.io/Old%20AutoClient.html" target="_blank" rel="noopener noreferrer">
+    Old Auto Client
+  </a>
+
+  <a href="https://bri1w23e.github.io/Galactic-Client-2.0.0.html" target="_blank" rel="noopener noreferrer">
+    Galactic Client
+  </a>
+
+  <script>
+    // MATRIX RAIN EFFECT
+    const canvas = document.getElementById("matrix");
+    const ctx = canvas.getContext("2d");
+
+    canvas.height = window.innerHeight;
+    canvas.width = window.innerWidth;
+
+    const chars = "01";
+    const fontSize = 16;
+    const columns = canvas.width / fontSize;
+
+    const drops = [];
+    for (let i = 0; i < columns; i++) drops[i] = 1;
+
+    function draw() {
+      ctx.fillStyle = "rgba(0, 0, 0, 0.05)";
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+      ctx.fillStyle = "#00ff00";
+      ctx.font = fontSize + "px monospace";
+
+      for (let i = 0; i < drops.length; i++) {
+        const text = chars[Math.floor(Math.random() * chars.length)];
+        ctx.fillText(text, i * fontSize, drops[i] * fontSize);
+
+        if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) {
+          drops[i] = 0;
+        }
+
+        drops[i]++;
+      }
+    }
+
+    setInterval(draw, 35);
+  </script>
 
 </body>
 </html>
